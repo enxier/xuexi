@@ -206,25 +206,26 @@ def video(driver_video, v_log, myscores):
                 v_num = min(myscores['有效视听目标'] - myscores['有效视听'], 12)
                 for i in range(v_log, v_log + v_num):
                     driver_video.get_url(links[i])
-                    print(i, driver_video.get_title())
-                    time.sleep(random.randint(2, 5))
-                    # 学习时长
-                    # t = random.randint(45, 60)
-                    t = (myscores['视听学习时长目标'] - myscores['视听学习时长']) * 3 * 60 // v_num  # v_num_total
-                    if t < 16:
-                        t = random.randint(10, 15)
-                    else:
-                        t = random.randint(t-5, t+5)
-                    t = random.randint(t - 10, t + 10)
-                    # print("时长是：{}".format(t))
-                    lifetime += t
-                    for j in range(t):
-                        if random.random() > 0.5:
-                            driver_video.go_js('window.scrollTo(0, (document.body.scrollHeight-800)/{}*{})'.format(t, j))
-                        print("\r视频学习中，视频剩余{}个,本次时长{}，剩余时间{}秒".format(v_log + v_num - i, t, t - j-1), end="")
-                        time.sleep(1)
-                    print('') # lou
-                    # driver_video.go_js('window.scrollTo(0, document.body.scrollHeight)')
+                    if not driver_video.get_title() == '系统维护中':
+                        print(i, driver_video.get_title())
+                        time.sleep(random.randint(2, 5))
+                        # 学习时长
+                        # t = random.randint(45, 60)
+                        t = (myscores['视听学习时长目标'] - myscores['视听学习时长']) * 3 * 60 // v_num  # v_num_total
+                        if t < 16:
+                            t = random.randint(10, 15)
+                        else:
+                            t = random.randint(t-5, t+5)
+                        t = random.randint(t - 10, t + 10)
+                        # print("时长是：{}".format(t))
+                        lifetime += t
+                        for j in range(t):
+                            if random.random() > 0.5:
+                                driver_video.go_js('window.scrollTo(0, (document.body.scrollHeight-800)/{}*{})'.format(t, j))
+                            print("\r视频学习中，视频剩余{}个,本次时长{}，剩余时间{}秒".format(v_log + v_num - i, t, t - j-1), end="")
+                            time.sleep(1)
+                        print('') # lou
+                        # driver_video.go_js('window.scrollTo(0, document.body.scrollHeight)')
                 myscores.update(show_scorenew(driver_video))
                 # if each[1] >= 6:
                 # if deach[1] >= 2:
