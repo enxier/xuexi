@@ -2,6 +2,14 @@
 
 修改自[Alivon](https://github.com/Alivon)/[Panda-Learning](https://github.com/Alivon/Panda-Learning)自动学习，为本人python编程习作，不承担任何法律后果。
 
+#### 特点：
+
+1. 通过帐户密码和扫描二维码两种方式登陆。
+2. 记录学习内容，不重复学习。
+3. 模拟人的操作方式，单线程、显示网页、多种积分和点点通查询方式、每个网页学习时长随机、网页随机滑动等，防止被封号。
+4. 自动打开网页学习，集满25个积分和24个点点通后，自动结束学习。
+
+
 ### 如何自动学习
 
 首先下载安装Chrome浏览器，https://www.google.cn/chrome/index.html
