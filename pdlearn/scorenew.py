@@ -1,6 +1,8 @@
 import time
 from pdlearn import mydriver
 
+firsttime = True
+
 def get_score(driver):
     try:
         '''
@@ -39,11 +41,15 @@ def get_diandian(driver):
         '''
         driver.get_url('https://pc.xuexi.cn/points/ptp.html')
         driver.web_wait(270, u"我的点点通")
-        # driver.find_element_by_css_selector('button.ant-btn.ant-btn-primary').click()
-        time.sleep(3)
         driver2 = driver.in_driver()
+        global firsttime
+        if firsttime:
+            driver2.find_element_by_css_selector('div.ant-modal-confirm-btns').click()
+            firsttime = False
+        time.sleep(3)
         total = driver2.find_element_by_css_selector('div.my-points-block')
         total = total.text.splitlines()
+        # print(total)
         # for i in total:
         #    print(i)
         mydian = {'点点通': int(total[total.index('我的点点通')+1]), '今日点点通': int(total[total.index('今日累积点点通')+1])}
