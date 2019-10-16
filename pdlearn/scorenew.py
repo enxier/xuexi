@@ -42,10 +42,17 @@ def get_diandian(driver):
         driver.get_url('https://pc.xuexi.cn/points/ptp.html')
         driver.web_wait(270, u"我的点点通")
         driver2 = driver.in_driver()
+        '''
         global firsttime
         if firsttime:
             driver2.find_element_by_css_selector('div.ant-modal-confirm-btns').click()
             firsttime = False
+        '''
+        try:
+            driver2.find_element_by_css_selector('div.ant-modal-confirm-btns').click()
+        except:
+            time.sleep(1)
+            # print('出现错误！')
         time.sleep(3)
         total = driver2.find_element_by_css_selector('div.my-points-block')
         total = total.text.splitlines()
