@@ -30,8 +30,8 @@ def user_flag(dd_status, uname):
 
 
 def get_argv():
-    nohead = True
-    lock = False
+    nohead = False
+    lock = True
     stime = False
     if len(argv) > 2:
         if argv[2] == "hidden":
@@ -222,7 +222,7 @@ def video(driver_video, v_log, myscores):
                         for j in range(t):
                             if random.random() > 0.5:
                                 driver_video.go_js('window.scrollTo(0, (document.body.scrollHeight-800)/{}*{})'.format(t, j))
-                            print("\r视频学习中，视频剩余{}个,本次时长{}，剩余时间{}秒".format(v_log + v_num - i, t, t - j-1), end="")
+                            print("\r视频学习中，视频剩余{}个,本次时长{}秒，剩余时间{}秒".format(v_log + v_num - i, t, t - j-1), end="")
                             time.sleep(1)
                         print('') # lou
                         # driver_video.go_js('window.scrollTo(0, document.body.scrollHeight)')
@@ -304,24 +304,39 @@ if __name__ == '__main__':
     #driver_article.set_cookies(cookies)
     print('3',driver_article.get_cookies())
     '''
-
-    print('开始今天的文章学习')
-    article(driver_login, a_log, myscores)
-    print('开始今天的视频学习')
-    video(driver_login, v_log, myscores)
-    print("总计用时{}分钟{}秒" .format(int(time.time() - start_time) // 60, int(time.time() - start_time) % 60))
-    driver_login.quit()
-    # user.shutdown(60)
-'''
     nohead, lock, stime = get_argv()
-    article_thread = threads.MyThread("文章学习", article, driver_login, a_log, each, lock=lock)
-    video_thread = threads.MyThread("视频学习", video, driver_login, v_log, each, lock=lock)
-    article_thread.start()
-    video_thread.start()
-    article_thread.join()
-    video_thread.join()
+    # lock = True
+    if lock:
+        print('开始今天的文章学习')
+        article(driver_login, a_log, myscores)
+        print('开始今天的视频学习')
+        video(driver_login, v_log, myscores)
+        driver_login.quit()
+        # user.shutdown(60)
+    else:
+        article_thread = threads.MyThread("文章学习", article, driver_login, a_log, myscores, lock=lock)
+        '''
+        driver = driver_login.driver
+        driver.execute_script("window.open('https://www.xuexi.cn/notFound.html')")
+        all_handles = driver.window_handles
+        print(all_handles)
+        driver.switch_to_window(all_handles[1])
+        '''
+        mycookies = driver_login.get_cookies()
+        driver_video = mydriver.Mydriver(nohead=nohead)
+        driver_video.get_url("https://pc.xuexi.cn/points/my-points.html")
+        driver_video.set_cookies(mycookies)
 
+        video_thread = threads.MyThread("视频学习", video, driver_video, v_log, myscores, lock=lock)
+        article_thread.start()
+        video_thread.start()
+        article_thread.join()
+        video_thread.join()
 
+        driver_login.quit()
+        driver_video.quit()
+    print("总计用时{}分钟{}秒".format(int(time.time() - start_time) // 60, int(time.time() - start_time) % 60))
+'''
     print("总计用时" + str(int(time.time() - start_time) / 60) + "分钟")
     user.shutdown(stime)
 '''
