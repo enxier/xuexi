@@ -31,3 +31,23 @@
 ### 关于扫码登录
 
 也支持扫码登录。不管提示，连续两次回车，打开二维码，用手机学习强国扫码授权，进行学习。
+
+### 关于多线程学习
+
+最新版本增加多线程学习模式（默认为单线程学习，防止封号，不怕封号的，可以多线程学习），增加两个参数，是否显示窗口（ hidden 或 show ）和多线程学习（ single 或 multithread ）。
+
+#### 开启方法：
+
+在命令行中执行pandalearning.exe时，增加两个参数。
+
+##### 多线程，不显示窗口
+
+> pandalearning.exe multithread hidden
+
+##### 多线程，显示窗口（默认）
+
+> pandalearning.exe multithread
+
+##### 单线程（默认），显示窗口（默认）
+
+> pandalearning.exe 
