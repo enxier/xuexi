@@ -34,15 +34,15 @@ def get_argv():
     lock = True
     stime = False
     if len(argv) > 2:
-        if argv[2] == "hidden":
-            nohead = True
-        elif argv[2] == "show":
-            nohead = False
-    if len(argv) > 3:
-        if argv[3] == "single":
+        if argv[2] == "single":
             lock = True
-        elif argv[3] == "multithread":
+        elif argv[2] == "multithread":
             lock = False
+    if len(argv) > 3:
+        if argv[3] == "hidden":
+            nohead = True
+        elif argv[3] == "show":
+            nohead = False
     if len(argv) > 4:
         if argv[4].isdigit():
             stime = argv[4]
@@ -305,6 +305,7 @@ if __name__ == '__main__':
     print('3',driver_article.get_cookies())
     '''
     nohead, lock, stime = get_argv()
+    print(nohead,lock)
     # lock = True
     if lock:
         print('开始今天的文章学习')
@@ -314,7 +315,13 @@ if __name__ == '__main__':
         driver_login.quit()
         # user.shutdown(60)
     else:
-        article_thread = threads.MyThread("文章学习", article, driver_login, a_log, myscores, lock=lock)
+        driver_login.quit()
+
+        driver_article = mydriver.Mydriver(nohead=nohead)
+        driver_article.get_url("https://pc.xuexi.cn/points/my-points.html")
+        driver_article.set_cookies(cookies)
+
+        article_thread = threads.MyThread("文章学习", article, driver_article, a_log, myscores, lock=lock)
         '''
         driver = driver_login.driver
         driver.execute_script("window.open('https://www.xuexi.cn/notFound.html')")
@@ -322,10 +329,10 @@ if __name__ == '__main__':
         print(all_handles)
         driver.switch_to_window(all_handles[1])
         '''
-        mycookies = driver_login.get_cookies()
+
         driver_video = mydriver.Mydriver(nohead=nohead)
         driver_video.get_url("https://pc.xuexi.cn/points/my-points.html")
-        driver_video.set_cookies(mycookies)
+        driver_video.set_cookies(cookies)
 
         video_thread = threads.MyThread("视频学习", video, driver_video, v_log, myscores, lock=lock)
         article_thread.start()
@@ -333,7 +340,7 @@ if __name__ == '__main__':
         article_thread.join()
         video_thread.join()
 
-        driver_login.quit()
+        driver_article.quit()
         driver_video.quit()
     print("总计用时{}分钟{}秒".format(int(time.time() - start_time) // 60, int(time.time() - start_time) % 60))
 '''
