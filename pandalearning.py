@@ -33,19 +33,19 @@ def get_argv():
     nohead = False
     lock = True
     stime = False
-    if len(argv) > 2:
-        if argv[2] == "single":
+    if len(argv) > 1:
+        if argv[1] == "single":
             lock = True
-        elif argv[2] == "multithread":
+        elif argv[1] == "multithread":
             lock = False
-    if len(argv) > 3:
-        if argv[3] == "hidden":
+    if len(argv) > 2:
+        if argv[2] == "hidden":
             nohead = True
-        elif argv[3] == "show":
+        elif argv[2] == "show":
             nohead = False
-    if len(argv) > 4:
-        if argv[4].isdigit():
-            stime = argv[4]
+    if len(argv) > 3:
+        if argv[3].isdigit():
+            stime = argv[3]
     return nohead, lock, stime
 
 
@@ -305,8 +305,9 @@ if __name__ == '__main__':
     print('3',driver_article.get_cookies())
     '''
     nohead, lock, stime = get_argv()
-    print(nohead,lock)
-    # lock = True
+    # print(argv)
+    # print(nohead,lock)
+    # lock = False
     if lock:
         print('开始今天的文章学习')
         article(driver_login, a_log, myscores)
