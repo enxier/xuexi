@@ -2,10 +2,9 @@ import os
 from time import sleep
 from sys import argv
 
-
 def get_user():
-    if len(argv) > 1:
-        uname = argv[1]
+    if len(argv) > 4:
+        uname = argv[4]
     else:
         uname = input("输入用户标记名：")
     if check_uname(uname):
