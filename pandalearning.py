@@ -120,7 +120,7 @@ def article(driver_article, a_log, myscores):
                     if t < 16:
                         t = random.randint(10, 15)
                     else:
-                        t = random.randint(t-5, t+5)
+                        t = random.randint(t-2, t+5)
                     lifetime += t
                     # print("时长是：{}".format(t))
                     for j in range(t):
@@ -215,7 +215,7 @@ def video(driver_video, v_log, myscores):
                         if t < 16:
                             t = random.randint(10, 15)
                         else:
-                            t = random.randint(t-5, t+5)
+                            t = random.randint(t-2, t+5)
                         t = random.randint(t - 10, t + 10)
                         # print("时长是：{}".format(t))
                         lifetime += t
